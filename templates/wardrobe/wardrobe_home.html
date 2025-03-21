@@ -1,0 +1,501 @@
+{% extends "wardrobe/base.html" %} {% load static %} {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="mb-0">My Wardrobe</h1>
+    <p class="text-muted">Manage and organize your clothing items</p>
+  </div>
+  <a href="{% url 'add-item' %}" class="btn btn-primary">
+    <i class="fas fa-plus me-2"></i>Add New Item
+  </a>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <form method="GET" class="row g-3">
+      <div class="col-md-3">
+        <label for="category" class="form-label">Category</label>
+        <select name="category" id="category" class="form-select">
+          <option
+            value="All"
+            {%
+            if
+            not
+            selected_category
+            or
+            selected_category=""
+            ="All"
+            %}selected{%
+            endif
+            %}
+          >
+            All Categories
+          </option>
+          <option
+            value="Tops"
+            {%
+            if
+            selected_category=""
+            ="Tops"
+            %}selected{%
+            endif
+            %}
+          >
+            Tops
+          </option>
+          <option
+            value="Bottoms"
+            {%
+            if
+            selected_category=""
+            ="Bottoms"
+            %}selected{%
+            endif
+            %}
+          >
+            Bottoms
+          </option>
+          <option
+            value="Dresses"
+            {%
+            if
+            selected_category=""
+            ="Dresses"
+            %}selected{%
+            endif
+            %}
+          >
+            Dresses
+          </option>
+          <option
+            value="Outerwear"
+            {%
+            if
+            selected_category=""
+            ="Outerwear"
+            %}selected{%
+            endif
+            %}
+          >
+            Outerwear
+          </option>
+          <option
+            value="Shoes"
+            {%
+            if
+            selected_category=""
+            ="Shoes"
+            %}selected{%
+            endif
+            %}
+          >
+            Shoes
+          </option>
+          <option
+            value="Accessories"
+            {%
+            if
+            selected_category=""
+            ="Accessories"
+            %}selected{%
+            endif
+            %}
+          >
+            Accessories
+          </option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="color" class="form-label">Color</label>
+        <select name="color" id="color" class="form-select">
+          <option
+            value="All"
+            {%
+            if
+            not
+            selected_color
+            or
+            selected_color=""
+            ="All"
+            %}selected{%
+            endif
+            %}
+          >
+            All Colors
+          </option>
+          <option
+            value="Black"
+            {%
+            if
+            selected_color=""
+            ="Black"
+            %}selected{%
+            endif
+            %}
+          >
+            Black
+          </option>
+          <option
+            value="White"
+            {%
+            if
+            selected_color=""
+            ="White"
+            %}selected{%
+            endif
+            %}
+          >
+            White
+          </option>
+          <option
+            value="Blue"
+            {%
+            if
+            selected_color=""
+            ="Blue"
+            %}selected{%
+            endif
+            %}
+          >
+            Blue
+          </option>
+          <option
+            value="Red"
+            {%
+            if
+            selected_color=""
+            ="Red"
+            %}selected{%
+            endif
+            %}
+          >
+            Red
+          </option>
+          <option
+            value="Green"
+            {%
+            if
+            selected_color=""
+            ="Green"
+            %}selected{%
+            endif
+            %}
+          >
+            Green
+          </option>
+          <option
+            value="Yellow"
+            {%
+            if
+            selected_color=""
+            ="Yellow"
+            %}selected{%
+            endif
+            %}
+          >
+            Yellow
+          </option>
+          <option
+            value="Purple"
+            {%
+            if
+            selected_color=""
+            ="Purple"
+            %}selected{%
+            endif
+            %}
+          >
+            Purple
+          </option>
+          <option
+            value="Pink"
+            {%
+            if
+            selected_color=""
+            ="Pink"
+            %}selected{%
+            endif
+            %}
+          >
+            Pink
+          </option>
+          <option
+            value="Brown"
+            {%
+            if
+            selected_color=""
+            ="Brown"
+            %}selected{%
+            endif
+            %}
+          >
+            Brown
+          </option>
+          <option
+            value="Orange"
+            {%
+            if
+            selected_color=""
+            ="Orange"
+            %}selected{%
+            endif
+            %}
+          >
+            Orange
+          </option>
+          <option
+            value="Multi"
+            {%
+            if
+            selected_color=""
+            ="Multi"
+            %}selected{%
+            endif
+            %}
+          >
+            Multi
+          </option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="pattern" class="form-label">Pattern</label>
+        <select name="pattern" id="pattern" class="form-select">
+          <option
+            value="All"
+            {%
+            if
+            not
+            selected_pattern
+            or
+            selected_pattern=""
+            ="All"
+            %}selected{%
+            endif
+            %}
+          >
+            All Patterns
+          </option>
+          <option
+            value="Solid"
+            {%
+            if
+            selected_pattern=""
+            ="Solid"
+            %}selected{%
+            endif
+            %}
+          >
+            Solid
+          </option>
+          <option
+            value="Striped"
+            {%
+            if
+            selected_pattern=""
+            ="Striped"
+            %}selected{%
+            endif
+            %}
+          >
+            Striped
+          </option>
+          <option
+            value="Plaid"
+            {%
+            if
+            selected_pattern=""
+            ="Plaid"
+            %}selected{%
+            endif
+            %}
+          >
+            Plaid
+          </option>
+          <option
+            value="Floral"
+            {%
+            if
+            selected_pattern=""
+            ="Floral"
+            %}selected{%
+            endif
+            %}
+          >
+            Floral
+          </option>
+          <option
+            value="Polka_dot"
+            {%
+            if
+            selected_pattern=""
+            ="Polka_dot"
+            %}selected{%
+            endif
+            %}
+          >
+            Polka Dot
+          </option>
+          <option
+            value="Graphic"
+            {%
+            if
+            selected_pattern=""
+            ="Graphic"
+            %}selected{%
+            endif
+            %}
+          >
+            Graphic
+          </option>
+          <option
+            value="Other"
+            {%
+            if
+            selected_pattern=""
+            ="Other"
+            %}selected{%
+            endif
+            %}
+          >
+            Other
+          </option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="season" class="form-label">Season</label>
+        <select name="season" id="season" class="form-select">
+          <option
+            value="All"
+            {%
+            if
+            not
+            selected_season
+            or
+            selected_season=""
+            ="All"
+            %}selected{%
+            endif
+            %}
+          >
+            All Seasons
+          </option>
+          <option
+            value="Spring"
+            {%
+            if
+            selected_season=""
+            ="Spring"
+            %}selected{%
+            endif
+            %}
+          >
+            Spring
+          </option>
+          <option
+            value="Summer"
+            {%
+            if
+            selected_season=""
+            ="Summer"
+            %}selected{%
+            endif
+            %}
+          >
+            Summer
+          </option>
+          <option
+            value="Fall"
+            {%
+            if
+            selected_season=""
+            ="Fall"
+            %}selected{%
+            endif
+            %}
+          >
+            Fall
+          </option>
+          <option
+            value="Winter"
+            {%
+            if
+            selected_season=""
+            ="Winter"
+            %}selected{%
+            endif
+            %}
+          >
+            Winter
+          </option>
+        </select>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-filter me-2"></i>Apply Filters
+        </button>
+        <a
+          href="{% url 'wardrobe-home' %}"
+          class="btn btn-outline-secondary ms-2"
+        >
+          <i class="fas fa-times me-2"></i>Clear Filters
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if items %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+  {% for item in items %}
+  <div class="col">
+    <div class="card h-100 shadow-sm">
+      <img
+        src="{{ item.image.url }}"
+        class="card-img-top"
+        alt="{{ item.name }}"
+        style="height: 200px; object-fit: cover"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ item.name }}</h5>
+        <div class="d-flex mb-2">
+          <span class="badge bg-primary me-1">{{ item.category|title }}</span>
+          <span class="badge bg-secondary me-1">{{ item.color|title }}</span>
+          {% if item.pattern != 'solid' %}
+          <span class="badge bg-info">{{ item.pattern|title }}</span>
+          {% endif %}
+        </div>
+        <p class="card-text small text-muted">
+          {{ item.season|title }} • Added {{ item.date_added|date:"M d, Y" }}
+        </p>
+      </div>
+      <div class="card-footer bg-transparent">
+        <div class="d-flex justify-content-between">
+          <a
+            href="{% url 'item-detail' item.id %}"
+            class="btn btn-sm btn-outline-primary"
+          >
+            <i class="fas fa-eye me-1"></i>View
+          </a>
+          <a
+            href="{% url 'update-item' item.id %}"
+            class="btn btn-sm btn-outline-secondary"
+          >
+            <i class="fas fa-edit me-1"></i>Edit
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+  <i class="fas fa-tshirt fa-4x text-muted mb-3"></i>
+  <h3>No items found</h3>
+  <p class="text-muted">
+    Try adjusting your filters or add new items to your wardrobe.
+  </p>
+  <a href="{% url 'add-item' %}" class="btn btn-primary mt-3">
+    <i class="fas fa-plus me-2"></i>Add New Item
+  </a>
+</div>
+{% endif %} {% endblock %}

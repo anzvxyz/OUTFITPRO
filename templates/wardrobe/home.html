@@ -1,0 +1,165 @@
+{% extends "wardrobe/base.html" %} {% load static %} {% block content %}
+<section class="py-5 text-center">
+  <div class="row py-lg-5">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <h1 class="fw-bold">Your Personal Wardrobe Stylist</h1>
+      <p class="lead text-muted">
+        Upload your clothing items and let our AI create perfect outfit
+        combinations based on color harmony, pattern compatibility, and your
+        personal style.
+      </p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        {% if user.is_authenticated %}
+        <a
+          href="{% url 'dashboard' %}"
+          class="btn btn-primary btn-lg px-4 gap-3"
+        >
+          <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+        </a>
+        {% else %}
+        <a
+          href="{% url 'register' %}"
+          class="btn btn-primary btn-lg px-4 gap-3"
+        >
+          <i class="fas fa-user-plus me-2"></i>Get Started
+        </a>
+        <a
+          href="{% url 'login' %}"
+          class="btn btn-outline-secondary btn-lg px-4"
+        >
+          <i class="fas fa-sign-in-alt me-2"></i>Login
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="row mb-5">
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body text-center">
+        <i class="fas fa-tshirt fa-3x text-primary mb-3"></i>
+        <h3 class="card-title">Smart Wardrobe Management</h3>
+        <p class="card-text">
+          Easily upload and categorize your clothing items with automatic color
+          and pattern detection.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body text-center">
+        <i class="fas fa-brain fa-3x text-primary mb-3"></i>
+        <h3 class="card-title">AI-Powered Outfit Suggestions</h3>
+        <p class="card-text">
+          Get personalized outfit recommendations based on color harmony,
+          pattern compatibility, and current trends.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body text-center">
+        <i class="fas fa-magic fa-3x text-primary mb-3"></i>
+        <h3 class="card-title">Learn Your Style</h3>
+        <p class="card-text">
+          Our system learns from your preferences to improve suggestions over
+          time.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="py-5 bg-light rounded">
+  <div class="container">
+    <h2 class="text-center mb-4">How It Works</h2>
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="d-flex">
+          <div class="flex-shrink-0">
+            <div
+              class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+              style="width: 50px; height: 50px"
+            >
+              <span class="text-white fw-bold">1</span>
+            </div>
+          </div>
+          <div class="flex-grow-1 ms-3">
+            <h4>Upload Your Wardrobe</h4>
+            <p>
+              Take photos of your clothing items and upload them to your digital
+              wardrobe. Our AI will automatically detect colors and patterns.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="d-flex">
+          <div class="flex-shrink-0">
+            <div
+              class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+              style="width: 50px; height: 50px"
+            >
+              <span class="text-white fw-bold">2</span>
+            </div>
+          </div>
+          <div class="flex-grow-1 ms-3">
+            <h4>Set Your Style Preferences</h4>
+            <p>
+              Tell us about your style preferences, favorite colors, and the
+              occasions you dress for most often.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="d-flex">
+          <div class="flex-shrink-0">
+            <div
+              class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+              style="width: 50px; height: 50px"
+            >
+              <span class="text-white fw-bold">3</span>
+            </div>
+          </div>
+          <div class="flex-grow-1 ms-3">
+            <h4>Get AI-Powered Suggestions</h4>
+            <p>
+              Our machine learning algorithms will analyze your wardrobe and
+              create outfit combinations that match your style.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="d-flex">
+          <div class="flex-shrink-0">
+            <div
+              class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+              style="width: 50px; height: 50px"
+            >
+              <span class="text-white fw-bold">4</span>
+            </div>
+          </div>
+          <div class="flex-grow-1 ms-3">
+            <h4>Save Your Favorite Outfits</h4>
+            <p>
+              Like an outfit suggestion? Save it to your collection for easy
+              access later.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'register' %}" class="btn btn-primary btn-lg"
+        >Start Building Your Wardrobe</a
+      >
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,229 @@
+{% extends "wardrobe/base.html" %} {% load static %} {% block content %}
+<div class="row mb-4">
+  <div class="col-md-8">
+    <h1 class="mb-3">Welcome back, {{ user.username }}!</h1>
+    <p class="lead">
+      Here's an overview of your wardrobe and outfit suggestions.
+    </p>
+  </div>
+  <div class="col-md-4 text-md-end">
+    <a href="{% url 'add-item' %}" class="btn btn-primary">
+      <i class="fas fa-plus me-2"></i>Add New Item
+    </a>
+    <a href="{% url 'generate-suggestions' %}" class="btn btn-success ms-2">
+      <i class="fas fa-sync me-2"></i>Generate Outfits
+    </a>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-tshirt me-2 text-primary"></i>Wardrobe Items
+          </h5>
+          <span class="badge bg-primary rounded-pill"
+            >{{ wardrobe_count }}</span
+          >
+        </div>
+        <p class="card-text">
+          You have {{ wardrobe_count }} items in your wardrobe
+        </p>
+        <a
+          href="{% url 'wardrobe-home' %}"
+          class="btn btn-outline-primary btn-sm"
+        >
+          View All Items
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title mb-3">
+          <i class="fas fa-palette me-2 text-primary"></i>Style Score
+        </h5>
+        <p class="card-text">Based on your wardrobe variety</p>
+        <div class="progress mb-3" style="height: 10px">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            style="width: {{ style_score }}%"
+            aria-valuenow="{{ style_score }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>{{ style_score }}%</span>
+          {% if style_score < 50 %}
+          <span class="text-muted">Needs improvement</span>
+          {% elif style_score < 75 %}
+          <span class="text-muted">Good</span>
+          {% else %}
+          <span class="text-muted">Excellent!</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title mb-3">
+          <i class="fas fa-heart me-2 text-primary"></i>Saved Outfits
+        </h5>
+        {% if saved_outfits %}
+        <p class="card-text">
+          You have {{ saved_outfits|length }} saved outfits
+        </p>
+        <a
+          href="{% url 'saved-outfits' %}"
+          class="btn btn-outline-primary btn-sm"
+        >
+          View Saved Outfits
+        </a>
+        {% else %}
+        <p class="card-text">You haven't saved any outfits yet</p>
+        <a
+          href="{% url 'outfit-suggestions' %}"
+          class="btn btn-outline-primary btn-sm"
+        >
+          Browse Suggestions
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-md-8 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h5 class="mb-0">
+          <i class="fas fa-lightbulb me-2 text-primary"></i>Outfit Suggestions
+        </h5>
+      </div>
+      <div class="card-body">
+        {% if outfit_suggestions %}
+        <div class="row">
+          {% for outfit in outfit_suggestions %}
+          <div class="col-md-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h6 class="card-title">{{ outfit.name }}</h6>
+                <div class="d-flex mb-2">
+                  <span class="badge bg-secondary me-1"
+                    >{{ outfit.occasion|title }}</span
+                  >
+                  <span class="badge bg-secondary"
+                    >{{ outfit.season|title }}</span
+                  >
+                </div>
+                <div class="d-flex mb-2">
+                  {% for item in outfit.items.all|slice:":3" %}
+                  <div
+                    class="rounded-circle overflow-hidden me-1"
+                    style="width: 30px; height: 30px"
+                  >
+                    <img
+                      src="{{ item.image.url }}"
+                      alt="{{ item.name }}"
+                      class="img-fluid"
+                    />
+                  </div>
+                  {% endfor %} {% if outfit.items.count > 3 %}
+                  <div
+                    class="rounded-circle bg-light d-flex align-items-center justify-content-center"
+                    style="width: 30px; height: 30px"
+                  >
+                    <small>+{{ outfit.items.count|add:"-3" }}</small>
+                  </div>
+                  {% endif %}
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <a
+                    href="{% url 'outfit-detail' outfit.id %}"
+                    class="btn btn-sm btn-outline-primary"
+                    >View</a
+                  >
+                  <span class="badge bg-success">{{ outfit.ai_score }}%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="text-center mt-3">
+          <a href="{% url 'outfit-suggestions' %}" class="btn btn-primary">
+            View All Suggestions
+          </a>
+        </div>
+        {% else %}
+        <div class="text-center py-4">
+          <p>
+            No outfit suggestions yet. Add more items to your wardrobe or
+            generate new suggestions.
+          </p>
+          <a href="{% url 'generate-suggestions' %}" class="btn btn-primary">
+            <i class="fas fa-magic me-2"></i>Generate Suggestions
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h5 class="mb-0">
+          <i class="fas fa-clock me-2 text-primary"></i>Recent Additions
+        </h5>
+      </div>
+      <div class="card-body">
+        {% if recent_items %}
+        <div class="list-group list-group-flush">
+          {% for item in recent_items %}
+          <a
+            href="{% url 'item-detail' item.id %}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex align-items-center">
+              <div class="flex-shrink-0">
+                <img
+                  src="{{ item.image.url }}"
+                  alt="{{ item.name }}"
+                  class="rounded"
+                  style="width: 50px; height: 50px; object-fit: cover"
+                />
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h6 class="mb-0">{{ item.name }}</h6>
+                <small class="text-muted"
+                  >{{ item.category|title }} • {{ item.color|title }}</small
+                >
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-center py-3">No items in your wardrobe yet.</p>
+        {% endif %}
+        <div class="text-center mt-3">
+          <a href="{% url 'add-item' %}" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Add New Item
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
